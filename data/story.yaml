@@ -1,0 +1,141 @@
+%YAML 1.2
+---
+
+- given: []
+  actions:
+    say: |
+      You are in a town with three people: Gandor, Bert, and Lortha.
+  choices:
+  - name: talkToGandor
+    variants:
+    - given: [-metGandor]
+      say: |
+        Hello, travelers! It's nice to see new people around here. Not many people
+        dare to visit here anymore. Not after what happened to the hunter.
+    - given: [metGandor]
+      say: |
+        Hello again! It's nice to see new people around here. Not many people dare
+        to visit here anymore. Not after what happened to the hunter.
+    set: [talkingToGandor]
+
+  - name: talkToBert
+    set: [talkingToBert]
+    variants:
+    - given: [-metBert]
+      say: |
+        Hello, mister. Here is my pocket money.
+      reward: 50
+    - given: [metBert]
+      say: |
+        Hello, again. I don't have any more pocket money.
+
+  - name: talkToLortha
+    variants:
+    - given: [-metLortha, -knowsAboutCat, -foundCat]
+      say: |
+        Oh, good morning. I don't have time to talk. I'm looking for my cat.
+    - given: [metLortha, -knowsAboutCat, -foundCat]
+      say: |
+        I don't have time to talk. I'm looking for my cat.
+    - given: [knowsAboutCat, -foundCat]
+      say: |
+        Can't you see I'm busy!
+    - given: [knowsAboutCat, foundCat, -rewardedForFindingMrMittens]
+      say: |
+        Have you found Mister Mittens?
+    - given: [knowsAboutCat, foundCat, rewardedForFindingMrMittens]
+      say: |
+        Hello. Thank you again for finding Mister Mittens.
+    set: [talkingToLortha]
+
+  - name: setFoundCat
+    given: [knowsAboutCat, -foundCat]
+    say: |
+      Cat Found!
+      As you search through the rubble you hear a hearty meow.
+      You have found mr. Mittens!
+    set: [foundCat]
+
+
+- given: [talkingToGandor, ?metGandor]
+  choices:
+  - name: exitTalk
+    say: |
+      You stop talking to Gandor.
+    set: [-talkingToGandor, metGandor]
+
+- given: [talkingToGandor, -knowsAboutTheHunter]
+  choices:
+  - name: askAboutTheHunter
+    say: |
+      The hunter was found without a head. In the bushes northeast. I bet the goblins
+      did it. The governor has set a price of 500¤ for any one who manages to destroy
+      the goblin nest.
+    set: [knowsAboutTheHunter]
+
+- given: [talkingToGandor, knowsAboutTheHunter, -knowsAboutPrize]
+  choices:
+  - name: askAboutPrize
+    say: |
+      You get 500¤ from the mayor if you destroy the goblin nest. It's not going
+      to be an easy job, but it’s big money.
+    set: [knowsAboutPrize]
+
+- given: [talkingToGandor, knowsAboutTheHunter, -knowsAboutGoblins]
+  choices:
+  - name: askAboutGoblins
+    say: |
+      Goblins! Nasty creatures. They live somewhere in the mountains up north.
+      There's a prize for killing them.
+    set: [knowsAboutGoblins]
+
+- given: [talkingToGandor, knowsAboutTheHunter, -knowsBertFoundTheBody]
+  choices:
+  - name: askWhoFoundTheBody
+    say: |
+      The boy, Bert, found him when he was collecting wood in the woods.
+    set: [knowsBertFoundTheBody]
+
+- given: [talkingToBert, ?metBert]
+  choices:
+  - name: exitTalk
+    say: |
+      You stop talking to Bert.
+    set: [-talkingToBert, metBert]
+
+- given: [talkingToBert, knowsAboutCat, -foundCat]
+  choices:
+  - name: askAboutLorthasCat
+    say: |
+      I think I saw the cat near the storehouse by the river.
+    set: [knowsTheCatIsInTheStorehouse]
+
+- given: [talkingToBert, knowsBertFoundTheBody]
+  choices:
+  - name: askAboutPlace
+    say: |
+      I found the hunter headless, his famous neclace gone. It was northeast by
+      the river.
+    set: [knowsAboutPlace]
+
+- given: [talkingToLortha, ?metLortha]
+  choices:
+  - name: exitTalk
+    say: |
+      You stop talking to Lortha.
+    set: [-talkingToLortha, metLortha]
+
+- given: [talkingToLortha, -foundCat]
+  choices:
+  - name: askAboutCat
+    say: |
+      It's missing. Stop bugging me unless you find it!
+    set: [knowsAboutCat]
+
+- given: [talkingToLortha, foundCat]
+  choices:
+  - name: informTheCatIsFound
+    say: |
+      Thank you so much! Here's a little reward for your help.
+    reward: 100
+    set: [rewardedForFindingMrMittens]

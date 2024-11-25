@@ -1,0 +1,25 @@
+{
+  "name": "story-engine",
+  "version": "1.0.0",
+  "description": "Story system library for Banished.",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsx tools/convert.ts && tsup",
+    "load": "tsx tools/convert.ts && tsx src/story.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "yaml": "^2.6.1"
+  }
+}
