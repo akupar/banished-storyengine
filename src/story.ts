@@ -4,7 +4,7 @@ import { Transition, TransitionStore, TransitionLib } from './transition';
 import { destructureTidbitArray } from './util';
 import { StoryPointRecord, ChoiceRecord, VariantRecord, EnrichedVariantRecord, ActionsRecord } from './types';
 // @ts-ignore
-import storyData from './data/story.json' with { type: 'json' };
+import storyData from '../data/story.json' with { type: 'json' };
 
 
 function getMolecule(cond: string[]) {

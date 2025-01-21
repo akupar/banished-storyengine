@@ -22,4 +22,4 @@ const writeFile = (filename: string, data: string) => {
 
 const data = parse(loadFile(`${__dirname}/../data/story.yaml`));
 
-writeFile(`${__dirname}/../src/data/story.json`, JSON.stringify(data, null, 2));
+writeFile(`${__dirname}/../data/story.json`, JSON.stringify(data, null, 2));
